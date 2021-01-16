@@ -22,7 +22,7 @@
         <mat-icon>settings</mat-icon>
         <span>設定</span>
       </button>
-      <button mat-menu-item>
+      <button (click)="authService.logout()" mat-menu-item>
         <mat-icon>exit_to_app</mat-icon>
         <span>ログアウト</span>
       </button>
