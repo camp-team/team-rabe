@@ -30,10 +30,7 @@ export class RoomEditComponent implements OnInit {
       '',
       [Validators.required, Validators.maxLength(this.userNameMaxLength)],
     ],
-    description: [
-      '',
-      [Validators.required, Validators.maxLength(this.descriptionMaxLength)],
-    ],
+    description: ['', [Validators.maxLength(this.descriptionMaxLength)]],
     // password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]],
   });
 
