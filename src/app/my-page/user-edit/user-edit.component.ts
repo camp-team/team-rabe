@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { UserData } from 'src/app/interfaces/user-data';
 import { AuthService } from 'src/app/services/auth.service';
+import { RedirectService } from 'src/app/services/redirect.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -24,7 +26,8 @@ export class UserEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authServie: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -40,10 +43,15 @@ export class UserEditComponent implements OnInit {
 
   changeUserName(): void {
     const newUserName: string = this.nameForm.value;
-    this.userService.changeUserName(this.uid, newUserName);
+    this.userService.changeUserName(this.uid, newUserName).then(() => {
+      this.nameForm.reset();
+      this.snackBar.open('ユーザー名を変更しました！');
+    });
   }
 
   changeUserAvatar(image: string): void {
-    this.userService.changeUserAvatar(this.uid, image);
+    this.userService
+      .changeUserAvatar(this.uid, image)
+      .then(() => this.snackBar.open('アバター画像を変更しました！'));
   }
 }
