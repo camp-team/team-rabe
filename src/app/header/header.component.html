@@ -1,1 +1,26 @@
-<p>header works!</p>
+<mat-toolbar class="header" color="primary">
+  <mat-toolbar-row>
+    <a class="header-logo" routerLink="/top">ORUYO</a>
+    <span>
+      <button
+        [style.background-image]=""
+        mat-fab
+        [matMenuTriggerFor]="menu"
+      ></button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>account_circle</mat-icon>
+          <span>マイページ</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>設定</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>ログアウト</span>
+        </button>
+      </mat-menu>
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>

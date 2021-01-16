@@ -1,0 +1,14 @@
+.header {
+  z-index: 1000;
+}
+
+.header-logo {
+  color: white;
+  display: block;
+  text-decoration: none;
+}
+
+mat-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+}
