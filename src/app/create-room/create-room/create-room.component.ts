@@ -6,6 +6,7 @@ import { Room } from 'src/app/interfaces/room';
 import { AuthService } from 'src/app/services/auth.service';
 import { RedirectService } from 'src/app/services/redirect.service';
 import { RoomService } from 'src/app/services/room.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-create-room',
@@ -15,6 +16,8 @@ import { RoomService } from 'src/app/services/room.service';
 export class CreateRoomComponent implements OnInit {
   readonly userNameMaxLength = 60;
   readonly descriptionMaxLength = 500;
+
+  private uid: string = this.authService.uid;
 
   isProcessing: boolean;
   oldImageUrl = '';
@@ -35,7 +38,8 @@ export class CreateRoomComponent implements OnInit {
     private authService: AuthService,
     private roomService: RoomService,
     private redirectService: RedirectService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +73,7 @@ export class CreateRoomComponent implements OnInit {
         .then((id) => {
           this.snackBar.open('ルームを作成しました！');
           this.redirectService.redirectToRoomDetail(id);
+          this.userService.addUserCreatedRoomId(this.uid, id);
         })
         .finally(() => (this.isProcessing = false));
     }
