@@ -1,20 +1,22 @@
-<ng-container *ngIf="authService.isProcessing">
-  <p>ログイン中</p>
+<ng-container *ngIf="authService.isProcessing; else loading">
+  <div class="loading"><img src="assets/images/loading.svg" alt="" /></div>
 </ng-container>
 
-<div class="welcome-wrap">
-  <div class="container">
-    <div class="main">
-      <p class="main__sub-copy">私はここにいるよ</p>
-      <!-- <p class="main__copy">LINEで確認しあおう</p> -->
-      <p aria-label="DaCook" class="main__title">
-        <span data-text="O">O</span>
-        <span data-text="R">R</span>
-        <span data-text="U">U</span>
-        <span data-text="Y">Y</span>
-        <span data-text="O">O</span>
-      </p>
-      <a [href]="lineAuthURL" class="btn">無料ではじめる</a>
+<ng-template #loading>
+  <div class="welcome-wrap">
+    <div class="container">
+      <div class="main">
+        <p class="main__sub-copy">私はここにいるよ</p>
+        <!-- <p class="main__copy">LINEで確認しあおう</p> -->
+        <p aria-label="DaCook" class="main__title">
+          <span data-text="O">O</span>
+          <span data-text="R">R</span>
+          <span data-text="U">U</span>
+          <span data-text="Y">Y</span>
+          <span data-text="O">O</span>
+        </p>
+        <a [href]="lineAuthURL" class="btn">無料ではじめる</a>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>
