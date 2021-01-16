@@ -20,26 +20,38 @@ export class RoomService {
 
     const iconURL = await result.ref.getDownloadURL();
 
-    return this.db.doc<Room>(`rooms/${roomId}`).update({
-      iconURL,
-    });
+    return this.db.doc(`rooms/${roomId}`).set(
+      {
+        iconURL,
+      },
+      { merge: true }
+    );
   }
 
   getRoom(id: string): Observable<Room> {
     return this.db.doc<Room>(`rooms/${id}`).valueChanges();
   }
 
-  async updateRoom(
-    room: Omit<Room, 'createdAt' | 'entrylogs' | 'ownerId'>
-  ): Promise<void> {
+  async updateRoom(room: Omit<Room, 'createdAt' | 'ownerId'>): Promise<void> {
     await this.changeRoomIconURL(room.roomId, room.iconURL);
     this.db
-      .doc<Omit<Room, 'iconURL' | 'createdAt' | 'entrylogs' | 'ownerId'>>(
+      .doc<Omit<Room, 'iconURL' | 'createdAt' | 'ownerId'>>(
         `rooms/${room.roomId}`
       )
       .set({
         ...room,
         updatedAt: new Date(),
       });
+  }
+
+  async createRoom(room: Omit<Room, 'createdAt' | 'roomId'>): Promise<string> {
+    const id = this.db.createId();
+    await this.changeRoomIconURL(id, room.iconURL);
+    this.db.doc<Room>(`rooms/${id}`).set({
+      ...room,
+      createdAt: new Date(),
+      roomId: id,
+    });
+    return id;
   }
 }
