@@ -66,18 +66,16 @@ export class RoomEditComponent implements OnInit {
     const formData = this.form.value;
 
     if (this.imageFile !== undefined) {
-      const roomValue: Omit<Room, 'createdAt' | 'entrylogs'> = {
+      const roomValue: Omit<Room, 'createdAt' | 'entrylogs' | 'iconURL'> = {
         roomId: this.roomId,
         name: formData.name,
         description: formData.description,
-        iconURL: this.imageFile,
         updatedAt: new Date(),
         ownerId: this.authService.uid,
-        joinedUserIds: this.joinedUserIds,
       };
 
       await this.roomService
-        .updateRoom(roomValue)
+        .updateRoom(roomValue, this.imageFile)
         .then(() => {
           this.snackBar.open('ルームを編集しました！');
           this.redirectService.redirectToRoomDetail(this.roomId);
