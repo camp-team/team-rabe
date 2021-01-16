@@ -22,6 +22,12 @@
     display: flex;
     align-items: center;
     margin-bottom: 16px;
+    &:hover .user__name {
+      color: #2dd072;
+    }
+    &:hover .user__avatar {
+      border: 1px solid #2dd072;
+    }
   }
   &__avatar {
     width: 40px;
@@ -29,12 +35,10 @@
     border-radius: 50%;
     overflow: hidden;
     margin-right: 16px;
+    transition: ease-in-out 0.3s;
   }
   &__name {
     color: #fff;
     transition: ease-in-out 0.3s;
-    &:hover {
-      color: #2dd072;
-    }
   }
 }
