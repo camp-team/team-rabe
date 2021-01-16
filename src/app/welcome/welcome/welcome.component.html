@@ -1,2 +1,8 @@
-<p>welcome works!</p>
-<button color="primary" mat-raised-button>ログイン</button>
+<ng-container *ngIf="authService.isProcessing; else default">
+  <p>ログイン中</p>
+</ng-container>
+
+<ng-template #default>
+  <p>welcome works!</p>
+  <a [href]="lineAuthURL" color="primary" mat-raised-button>ログイン</a>
+</ng-template>
