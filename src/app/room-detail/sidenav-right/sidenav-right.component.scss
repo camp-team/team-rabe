@@ -1,0 +1,40 @@
+.nav-list {
+  background: #171c1e;
+  height: 100%;
+  &__close {
+    color: #fff;
+  }
+  &__btn {
+    color: #fff;
+  }
+  &__icon {
+    color: #fff;
+  }
+}
+
+.user {
+  padding: 16px;
+  &__heading {
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  &__block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 16px;
+  }
+  &__name {
+    color: #fff;
+    transition: ease-in-out 0.3s;
+    &:hover {
+      color: #2dd072;
+    }
+  }
+}

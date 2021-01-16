@@ -1,0 +1,23 @@
+<mat-nav-list class="nav-list">
+  <button mat-icon-button (click)="toggleNav()" class="nav-list__close">
+    <mat-icon>close</mat-icon>
+  </button>
+  <a mat-list-item routerLink="/" class="nav-list__btn" (click)="toggleNav()">
+    <mat-icon class="nav-list__icon">home</mat-icon>ホーム</a
+  >
+
+  <div class="user">
+    <p class="user__heading">メンバー</p>
+
+    <div *ngFor="let user of users" class="user__block" mat-list-item>
+      <a>
+        <img
+          src="https://dummyimage.com/160x160.jpg"
+          alt=""
+          class="user__avatar"
+        />
+      </a>
+      <p class="user__name">User</p>
+    </div>
+  </div>
+</mat-nav-list>
