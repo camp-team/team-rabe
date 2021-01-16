@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { CropperModule } from '@deer-inc/ngx-croppie';
 
 @NgModule({
   declarations: [MyPageComponent, RoomEditComponent, UserEditComponent],
@@ -22,6 +23,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     FormsModule,
     MatIconModule,
     MatButtonModule,
+    CropperModule,
   ],
 })
 export class MyPageModule {}
