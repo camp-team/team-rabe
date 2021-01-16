@@ -1,1 +1,34 @@
-<p>user-edit works!</p>
+<div class="user-edit-content" *ngIf="user$ | async as user">
+  <section class="name-form-section">
+    <mat-form-field
+      appearance="fill"
+      hintLabel
+      [hideRequiredMarker]="true"
+      class="name-form"
+    >
+      <mat-label>ユーザー名編集</mat-label>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        placeholder="{{ user.name }}"
+        [formControl]="nameForm"
+        required
+        #input
+      />
+      <mat-hint align="end">{{ input.value?.length }}/60</mat-hint>
+      <mat-error *ngIf="nameForm.hasError('required')">必須入力です</mat-error>
+      <mat-error *ngIf="nameForm.hasError('maxlength')"
+        >最大文字数は60文字です</mat-error
+      >
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="nameForm.invalid"
+      (click)="changeUserName()"
+    >
+      更新する
+    </button>
+  </section>
+</div>
