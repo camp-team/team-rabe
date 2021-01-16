@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { RedirectService } from './redirect.service';
+import firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class AuthService {
     }),
     shareReplay(1)
   );
+  afUser$: Observable<firebase.User> = this.afAuth.user;
 
   constructor(
     private fns: AngularFireFunctions,
