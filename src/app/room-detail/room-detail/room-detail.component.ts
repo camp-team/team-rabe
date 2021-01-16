@@ -10,6 +10,7 @@ import { UiService } from 'src/app/services/ui.service';
 export class RoomDetailComponent implements OnInit {
   opened$: Observable<boolean> = this.uiService.isOpen$;
   scrWidth: any;
+  roomPage = true;
 
   constructor(private uiService: UiService) {}
 

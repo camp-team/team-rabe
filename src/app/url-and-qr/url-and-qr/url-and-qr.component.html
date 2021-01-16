@@ -1,0 +1,29 @@
+<h1 matDialogTitle>URLかQRコードを共有してください</h1>
+
+<mat-dialog-content>
+  <div class="code-container">
+    <mat-form-field appearance="outline">
+      <mat-label>URL</mat-label>
+      <input
+        matInput
+        readonly
+        autocomplete="off"
+        [formControl]="roomURL"
+        class="url-form"
+      />
+      <mat-icon
+        class="clipboard"
+        matSuffix
+        [cdkCopyToClipboard]="url"
+        (click)="copyToClipBoard()"
+      >
+        content_paste
+      </mat-icon>
+    </mat-form-field>
+    <qr-code [value]="url" size="150" errorCorrectionLevel="M"></qr-code>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button matDialogClose>閉じる</button>
+</mat-dialog-actions>
