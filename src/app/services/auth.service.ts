@@ -15,10 +15,10 @@ import firebase from 'firebase';
 })
 export class AuthService {
   isProcessing: boolean;
-  user: any;
+  uid: string;
   user$: Observable<UserData> = this.afAuth.user.pipe(
     switchMap((user) => {
-      this.user = user;
+      this.uid = user?.uid;
       if (user) {
         return this.db.doc(`users/${user.uid}`).valueChanges();
       } else {

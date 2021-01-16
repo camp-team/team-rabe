@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 
 export interface UserData {
-  uId: string;
+  uid: string;
   name: string;
   avatarURL?: string;
   activeRoomId: string;
