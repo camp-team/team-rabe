@@ -30,6 +30,7 @@
     "firebase": "^7.0 || ^8.0",
     "firebase-admin": "^9.4.2",
     "node-fetch": "^2.6.1",
+    "request": "^2.88.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

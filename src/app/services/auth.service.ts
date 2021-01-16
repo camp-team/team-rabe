@@ -28,7 +28,7 @@ export class AuthService {
 
   constructor(
     private fns: AngularFireFunctions,
-    private afAuth: AngularFireAuth,
+    public afAuth: AngularFireAuth,
     private snackbar: MatSnackBar,
     private router: Router,
     private db: AngularFirestore
@@ -43,8 +43,10 @@ export class AuthService {
         console.log(error);
         this.router.navigate(['/']);
       });
+    console.log(customToken);
 
     if (customToken) {
+      console.log(customToken);
       this.afAuth
         .signInWithCustomToken(customToken)
         .then(() => {
