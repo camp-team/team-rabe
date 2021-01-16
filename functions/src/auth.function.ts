@@ -101,8 +101,9 @@ export const getCustomToken = functions
         {
           uid: lineUser.sub,
           name: lineUser.name,
-          photoURL: lineUser.picture,
+          avatarURL: lineUser.picture,
           createdAt: new Date(),
+          updatedAt: new Date(),
         },
         { merge: true }
       );
