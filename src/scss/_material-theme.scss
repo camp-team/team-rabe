@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$oruyo-primary: mat-palette($mat-light-green);
+$oruyo-accent: mat-palette($mat-light-blue, A200, A100, A400);
+
+$oruyo-warn: mat-palette($mat-red);
+
+$oruyo-theme: mat-dark-theme($oruyo-primary, $oruyo-accent, $oruyo-warn);
+
+@include angular-material-theme($oruyo-theme);
