@@ -73,7 +73,6 @@ export class RoomEditComponent implements OnInit {
         iconURL: this.imageFile,
         updatedAt: new Date(),
         ownerId: this.authService.uid,
-        joinedUserIds: this.joinedUserIds,
       };
 
       await this.roomService
