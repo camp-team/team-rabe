@@ -1,0 +1,44 @@
+.nav-list {
+  background: #171c1e;
+  height: 100%;
+  &__close {
+    color: #fff;
+  }
+  &__btn {
+    color: #fff;
+  }
+  &__icon {
+    color: #fff;
+  }
+}
+
+.user {
+  padding: 16px;
+  &__heading {
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  &__block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    &:hover .user__name {
+      color: #2dd072;
+    }
+    &:hover .user__avatar {
+      border: 1px solid #2dd072;
+    }
+  }
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 16px;
+    transition: ease-in-out 0.3s;
+  }
+  &__name {
+    color: #fff;
+    transition: ease-in-out 0.3s;
+  }
+}
