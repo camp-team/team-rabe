@@ -8,6 +8,4 @@ export interface Room {
   iconURL: string;
   createdAt: Date;
   updatedAt: Date;
-  joinedUserIds: string[];
-  entrylogs: string[];
 }

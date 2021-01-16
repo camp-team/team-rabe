@@ -5,7 +5,6 @@ export interface UserData {
   name: string;
   avatarURL?: string;
   activeRoomId: string;
-  joinedRoomIds: string[];
   createdAt: admin.firestore.Timestamp;
   updatedAt: admin.firestore.Timestamp;
 }
