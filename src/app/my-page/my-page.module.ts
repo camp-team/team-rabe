@@ -9,9 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
-  declarations: [MyPageComponent, RoomEditComponent],
+  declarations: [MyPageComponent, RoomEditComponent, UserEditComponent],
   imports: [
     CommonModule,
     MyPageRoutingModule,
