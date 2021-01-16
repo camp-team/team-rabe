@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+import { GuestGuard } from './guards/guest.guard';
 import { ShellComponent } from './shell/shell.component';
 
 const routes: Routes = [
@@ -7,6 +9,8 @@ const routes: Routes = [
     path: 'welcome',
     loadChildren: () =>
       import('./welcome/welcome.module').then((m) => m.WelcomeModule),
+    canLoad: [GuestGuard],
+    canActivate: [GuestGuard],
   },
   {
     path: '',
@@ -16,6 +20,8 @@ const routes: Routes = [
         path: '',
         pathMatch: 'full',
         loadChildren: () => import('./top/top.module').then((m) => m.TopModule),
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'room-detail',
@@ -23,11 +29,15 @@ const routes: Routes = [
           import('./room-detail/room-detail.module').then(
             (m) => m.RoomDetailModule
           ),
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'settings',
         loadChildren: () =>
           import('./settings/settings.module').then((m) => m.SettingsModule),
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
       },
     ],
   },
