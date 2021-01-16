@@ -36,7 +36,7 @@ export class AuthService {
     private redirectService: RedirectService,
     private router: Router
   ) {
-    this.afUser$.subscribe((user: firebase.User) => (this.uid = user.uid));
+    this.afUser$.subscribe((user: firebase.User) => (this.uid = user?.uid));
   }
 
   async loginWithLine(code: string): Promise<void> {

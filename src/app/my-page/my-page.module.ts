@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { CropperModule } from '@deer-inc/ngx-croppie';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [MyPageComponent, RoomEditComponent, UserEditComponent],
@@ -24,6 +26,8 @@ import { CropperModule } from '@deer-inc/ngx-croppie';
     MatIconModule,
     MatButtonModule,
     CropperModule,
+    MatDividerModule,
+    MatTabsModule,
   ],
 })
 export class MyPageModule {}

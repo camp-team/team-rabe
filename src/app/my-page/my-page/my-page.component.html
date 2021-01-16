@@ -1,3 +1,10 @@
-<div class="container">
-  <app-user-edit></app-user-edit>
-</div>
+<mat-tab-group dynamicHeight>
+  <div class="container">
+    <mat-tab label="ユーザー編集">
+      <app-user-edit></app-user-edit>
+    </mat-tab>
+    <mat-tab label="ルーム編集">
+      <app-room-edit></app-room-edit>
+    </mat-tab>
+  </div>
+</mat-tab-group>
