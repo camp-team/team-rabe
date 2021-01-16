@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./room-detail.component.scss'],
 })
 export class RoomDetailComponent implements OnInit {
+  roomPage = true;
+
   constructor() {}
 
   ngOnInit(): void {}
