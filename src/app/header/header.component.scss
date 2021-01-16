@@ -2,6 +2,10 @@
   z-index: 1000;
 }
 
+h1 {
+  margin-right: auto;
+}
+
 .header-logo {
   color: white;
   display: block;
@@ -11,4 +15,8 @@
 mat-toolbar-row {
   display: flex;
   justify-content: space-between;
+}
+
+.avatar {
+  background: center/cover #ccc;
 }
