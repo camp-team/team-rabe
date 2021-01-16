@@ -51,7 +51,7 @@ const getAccessToken = async (code: string) => {
       client_id: functions.config().line.client_id,
       client_secret: functions.config().line.crient_secret,
       redirect_uri:
-        'https://asia-northeast1-line-demo-a1a08.cloudfunctions.net/getLineCodeWebhook',
+        'https://asia-northeast1-team-rabe.cloudfunctions.net/getLineCodeWebhook',
     }),
   }).then((r) => r.json());
 };
