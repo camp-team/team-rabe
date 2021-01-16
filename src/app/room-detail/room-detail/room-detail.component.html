@@ -1,1 +1,18 @@
 <p>room-detail works!</p>
+<button class="nav-btn" (click)="toggleNav()">
+  <mat-icon>navigate_next</mat-icon>
+</button>
+
+<mat-sidenav-container (backdropClick)="toggleNav()">
+  <mat-sidenav
+    #sidenav
+    [opened]="opened$ | async"
+    fixedInViewport
+    [fixedTopGap]="scrWidth > 600 ? 64 : 56"
+    class="sidenav"
+    position="end"
+  >
+    <app-sidenav-right></app-sidenav-right>
+  </mat-sidenav>
+  <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content
+></mat-sidenav-container>

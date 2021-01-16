@@ -2,6 +2,7 @@
   <h1>
     <a class="header-logo" routerLink="/">ORUYO</a>
   </h1>
+  <ng-content></ng-content>
   <ng-container *ngIf="authService.user$ | async as user; else blank">
     <button
       class="avatar"
