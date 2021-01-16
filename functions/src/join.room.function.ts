@@ -47,14 +47,14 @@ export const joinRoomAndReplyMessage = functions
             .doc(userText)
             .get()
             .then(async (room: any) => {
-              const iconlURL = room.data().iconURL;
+              const iconURL = room.data().iconURL;
               const roomName = room.data().name;
 
               await client.replyFlex(event.replyToken, 'this is a message', {
                 type: 'bubble',
                 hero: {
                   type: 'image',
-                  url: `${iconlURL}`,
+                  url: `${iconURL}`,
                   size: 'full',
                   aspectRatio: '20:13',
                   aspectMode: 'cover',
