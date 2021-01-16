@@ -1,1 +1,6 @@
-<p>created-room-list works!</p>
+<ng-container *ngIf="createdRooms$ | async as rooms">
+  <h1>自分が作成したルーム一覧</h1>
+  <ng-container *ngFor="let room of rooms">
+    <p>{{ room | json }}</p>
+  </ng-container>
+</ng-container>
