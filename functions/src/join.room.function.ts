@@ -22,6 +22,8 @@ export const joinRoomAndReplyMessage = functions
     let userText = '';
     if (event.type === 'message' && event.message.type === 'text') {
       userText = event.message.text;
+      functions.logger.info(userText);
+      functions.logger.info(event.message);
     } else {
       userText = '(Message type is not text)';
     }
@@ -79,7 +81,7 @@ export const joinRoomAndReplyMessage = functions
                       contents: [
                         {
                           type: 'text',
-                          text: `${roomName}に入りました！`,
+                          text: `${roomName}のメンバーになりました！`,
                           flex: 0,
                           margin: 'md',
                           size: 'md',
@@ -97,7 +99,7 @@ export const joinRoomAndReplyMessage = functions
         return null;
       })
       .catch((err) => {
-        console.log(err);
+        functions.logger.error(err);
       });
 
     return res.status(200).send(req.method);
