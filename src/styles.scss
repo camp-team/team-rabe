@@ -56,3 +56,13 @@ button {
   padding: 0 48px;
   margin: 0 auto;
 }
+
+.cr-viewport {
+  box-sizing: border-box;
+}
+
+.mat-tab-list {
+  div {
+    width: 100%;
+  }
+}
