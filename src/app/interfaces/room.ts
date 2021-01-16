@@ -4,10 +4,8 @@ export interface Room {
   roomId: string;
   ownerId: string;
   name: string;
-  description: string;
+  description?: string;
   iconURL: string;
   createdAt: Date;
   updatedAt: Date;
-  joinedUserIds: string[];
-  entrylogs: string[];
 }

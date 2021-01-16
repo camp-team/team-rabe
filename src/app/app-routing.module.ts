@@ -40,6 +40,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'create-room',
+        loadChildren: () =>
+          import('./create-room/create-room.module').then(
+            (m) => m.CreateRoomModule
+          ),
+      },
+      {
         path: 'my-page',
         loadChildren: () =>
           import('./my-page/my-page.module').then((m) => m.MyPageModule),
