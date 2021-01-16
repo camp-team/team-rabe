@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "team-rabe": {
+      "hosting": {
+        "team-rabe": [
+          "team-rabe"
+        ]
+      }
+    }
+  }
+}
