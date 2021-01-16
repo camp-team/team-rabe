@@ -56,7 +56,7 @@ export class WelcomeComponent implements OnInit {
       response_type: 'code',
       client_id: environment.line.clientId,
       state,
-      scope: 'profile openid email',
+      scope: 'profile openid',
       bot_prompt: 'aggressive',
       redirect_uri: environment.line.redirectURI,
     }).toString();
