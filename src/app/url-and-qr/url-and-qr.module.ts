@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [UrlAndQrComponent],
@@ -21,6 +22,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     FormsModule,
     MatIconModule,
     ClipboardModule,
+    MatDialogModule,
   ],
   exports: [UrlAndQrComponent],
 })
