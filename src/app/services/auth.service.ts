@@ -15,10 +15,9 @@ import firebase from 'firebase';
 })
 export class AuthService {
   isProcessing: boolean;
-  user: any;
+  uid: string;
   user$: Observable<UserData> = this.afAuth.user.pipe(
     switchMap((user) => {
-      this.user = user;
       if (user) {
         return this.db.doc(`users/${user.uid}`).valueChanges();
       } else {
@@ -36,7 +35,9 @@ export class AuthService {
     private db: AngularFirestore,
     private redirectService: RedirectService,
     private router: Router
-  ) {}
+  ) {
+    this.afUser$.subscribe((user: firebase.User) => (this.uid = user.uid));
+  }
 
   async loginWithLine(code: string): Promise<void> {
     this.isProcessing = true;
