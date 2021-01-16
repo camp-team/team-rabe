@@ -9,12 +9,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { UserEditComponent } from './user-edit/user-edit.component';
 import { CropperModule } from '@deer-inc/ngx-croppie';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-  declarations: [MyPageComponent, RoomEditComponent],
+  declarations: [MyPageComponent, RoomEditComponent, UserEditComponent],
   imports: [
     CommonModule,
     MyPageRoutingModule,

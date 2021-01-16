@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserData } from 'src/app/interfaces/user-data';
+import { AuthService } from 'src/app/services/auth.service';
 import { UiService } from 'src/app/services/ui.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sidenav-right',
@@ -11,11 +11,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SidenavRightComponent implements OnInit {
   opened$: Observable<boolean> = this.uiService.isOpen$;
-  user$: Observable<UserData> = this.userService.user$;
+  user$: Observable<UserData> = this.authService.user$;
 
   users = new Array(12);
 
-  constructor(private uiService: UiService, private userService: UserService) {}
+  constructor(private uiService: UiService, private authService: AuthService) {}
 
   ngOnInit(): void {
     console.log(this.users);
