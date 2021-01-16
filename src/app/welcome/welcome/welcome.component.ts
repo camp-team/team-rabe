@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { RedirectService } from 'src/app/services/redirect.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,7 +18,8 @@ export class WelcomeComponent implements OnInit {
     public authService: AuthService,
     private fns: AngularFireFunctions,
     private route: ActivatedRoute,
-    private router: Router
+    private redirectService: RedirectService,
+    private snackBar: MatSnackBar
   ) {
     this.route.queryParamMap.subscribe((param: Params) => {
       const key = 'error';
@@ -26,13 +29,16 @@ export class WelcomeComponent implements OnInit {
 
       if (error) {
         console.error(errorDescription);
-        this.router.navigate(['/']);
+        this.redirectService.redirectToTop();
         return;
       }
 
       const code = param.get('code');
       if (code) {
-        this.authService.loginWithLine(code);
+        this.authService.loginWithLine(code).then(() => {
+          this.snackBar.open('ログインしました');
+          this.redirectService.redirectToTop();
+        });
       }
     });
 

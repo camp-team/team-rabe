@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { RedirectService } from './redirect.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,9 @@ export class AuthService {
     private fns: AngularFireFunctions,
     public afAuth: AngularFireAuth,
     private snackbar: MatSnackBar,
-    private router: Router,
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private redirectService: RedirectService,
+    private router: Router
   ) {}
 
   async loginWithLine(code: string): Promise<void> {
@@ -41,7 +43,7 @@ export class AuthService {
       .toPromise()
       .catch((error) => {
         console.log(error);
-        this.router.navigate(['/']);
+        this.redirectService.redirectToTop();
       });
     console.log(customToken);
 
@@ -49,10 +51,6 @@ export class AuthService {
       console.log(customToken);
       this.afAuth
         .signInWithCustomToken(customToken)
-        .then(() => {
-          this.snackbar.open('ログインしました');
-          this.router.navigate(['/']);
-        })
         .catch((error) => {
           console.log('ログイン失敗');
           console.error(error);
