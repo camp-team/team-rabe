@@ -1,5 +1,5 @@
 <div class="user-edit-content" *ngIf="user$ | async as user">
-  <section class="name-form-section">
+  <section class="section name-form-section">
     <mat-form-field
       appearance="fill"
       hintLabel
@@ -30,5 +30,18 @@
     >
       更新する
     </button>
+  </section>
+
+  <section class="section">
+    <deer-crop-trigger
+      [options]="{
+        aspectRatio: 1 / 1,
+        oldImageUrl: oldImageUrl,
+        width: 420,
+        resultType: 'base64'
+      }"
+      (image)="changeUserAvatar($event)"
+    >
+    </deer-crop-trigger>
   </section>
 </div>
