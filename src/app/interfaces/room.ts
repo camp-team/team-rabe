@@ -6,8 +6,8 @@ export interface Room {
   name: string;
   description?: string;
   iconURL: string;
-  createdAt: admin.firestore.Timestamp;
-  updatedAt: admin.firestore.Timestamp;
+  createdAt: Date;
+  updatedAt: Date;
   joinedUserIds: string[];
   entrylogs: string[];
 }
