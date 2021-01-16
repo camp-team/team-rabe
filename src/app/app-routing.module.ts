@@ -39,6 +39,15 @@ const routes: Routes = [
         canLoad: [AuthGuard],
         canActivate: [AuthGuard],
       },
+      {
+        path: 'create-room',
+        loadChildren: () =>
+          import('./create-room/create-room.module').then(
+            (m) => m.CreateRoomModule
+          ),
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+      },
     ],
   },
 ];
