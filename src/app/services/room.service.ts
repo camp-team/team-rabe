@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { combineLatest, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { UserData } from 'functions/src/interfaces/userData';
+import { combineLatest, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { EntryLog, EntryLogWithUserData } from '../interfaces/entry-log';
 import { Room } from '../interfaces/room';
 
 @Injectable({
@@ -84,6 +86,36 @@ export class RoomService {
             this.getRoom(doc.roomId)
           );
           return combineLatest(room$$);
+        })
+      );
+  }
+
+  getEntryLogs(roomId: string) {
+    return this.db
+      .collection<EntryLog>(`rooms/${roomId}/entrylogs`)
+      .valueChanges()
+      .pipe(
+        switchMap((entryLogs: EntryLog[]) => {
+          const distinctUserIds: string[] = Array.from(
+            new Set(entryLogs.map((entryLog: EntryLog) => entryLog.userId))
+          );
+          const user$$: Observable<UserData>[] = distinctUserIds.map(
+            (userId: string) => {
+              return this.db.doc<UserData>(`users/${userId}`).valueChanges();
+            }
+          );
+          const users$: Observable<UserData[]> = combineLatest(user$$);
+          return combineLatest([of(entryLogs), users$]);
+        }),
+        map(([entryLogs, users]) => {
+          return entryLogs.map((entryLog: EntryLog) => {
+            return {
+              ...entryLog,
+              user: users.find(
+                (user: UserData) => user.uId === entryLog.userId
+              ),
+            };
+          });
         })
       );
   }
