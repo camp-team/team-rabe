@@ -25,6 +25,9 @@ export class UserService {
   }
 
   addUserCreatedRoomId(uid: string, roomId: string): Promise<void> {
-    return this.db.doc(`users/${uid}/createdRoomIds/${roomId}`).set({ roomId });
+    return this.db.doc(`users/${uid}/createdRoomIds/${roomId}`).set({
+      roomId,
+      createdAt: new Date(),
+    });
   }
 }
