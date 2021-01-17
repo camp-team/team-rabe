@@ -1,1 +1,32 @@
-<p>created-room-list works!</p>
+<div class="created-room-list">
+  <div class="heading">
+    <h2 class="heading__text">自分が作成したルーム一覧</h2>
+  </div>
+
+  <mat-divider class="divider"></mat-divider>
+
+  <ng-container *ngIf="createdRooms$ | async as rooms; else createRoom">
+    <ng-container *ngFor="let room of rooms">
+      <a routerLink="/room-detail/{{ room.roomId }}" class="room">
+        <div class="room__thumbnail">
+          <img [src]="room.iconURL" alt="" />
+        </div>
+        <div class="room__body">
+          <p class="room__name">{{ room.name }}</p>
+          <p class="room__description">{{ room.description }}</p>
+        </div>
+      </a>
+    </ng-container>
+  </ng-container>
+  <ng-template #createRoom>
+    <a routerLink="/create-room" class="room">
+      <div class="room__thumbnail">
+        <mat-icon class="room__icon">add</mat-icon>
+      </div>
+      <div class="room__body">
+        <p class="room__name">まだありません</p>
+        <p class="room__description">チームを作成しましょう。</p>
+      </div>
+    </a>
+  </ng-template>
+</div>

@@ -23,4 +23,8 @@ export class UserService {
     const avatarURL: string = await result.ref.getDownloadURL();
     return this.db.doc<UserData>(`users/${uid}`).update({ avatarURL });
   }
+
+  addUserCreatedRoomId(uid: string, roomId: string): Promise<void> {
+    return this.db.doc(`users/${uid}/createdRoomIds/${roomId}`).set({ roomId });
+  }
 }
