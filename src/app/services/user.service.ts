@@ -28,4 +28,8 @@ export class UserService {
   getUser(userId: string): Observable<UserData> {
     return this.db.doc<UserData>(`users/${userId}`).valueChanges();
   }
+
+  addUserCreatedRoomId(uid: string, roomId: string): Promise<void> {
+    return this.db.doc(`users/${uid}/createdRoomIds/${roomId}`).set({ roomId });
+  }
 }

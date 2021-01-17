@@ -45,6 +45,8 @@ const routes: Routes = [
           import('./create-room/create-room.module').then(
             (m) => m.CreateRoomModule
           ),
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'my-page',

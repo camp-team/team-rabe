@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Room } from '../interfaces/room';
 import { UserData } from '../interfaces/user-data';
 
@@ -58,5 +59,19 @@ export class RoomService {
       roomId: id,
     });
     return id;
+  }
+
+  getCreatedRooms(uid: string): Observable<Room[]> {
+    return this.db
+      .collection(`users/${uid}/createdRoomIds`)
+      .valueChanges()
+      .pipe(
+        switchMap((roomIds: { roomId: string }[]) => {
+          const room$$: Observable<Room>[] = roomIds.map(
+            (doc: { roomId: string }) => this.getRoom(doc.roomId)
+          );
+          return combineLatest(room$$);
+        })
+      );
   }
 }
