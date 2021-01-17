@@ -6,12 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: RoomDetailComponent,
-    children: [
-      {
-        path: ':id',
-        component: RoomDetailComponent,
-      },
-    ],
+  },
+  {
+    path: ':id',
+    component: RoomDetailComponent,
   },
 ];
 

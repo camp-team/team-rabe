@@ -13,3 +13,23 @@
 mat-icon {
   color: #fff;
 }
+
+.card-layout {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.user-card {
+  padding: 24px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  &__items {
+    img {
+      width: 64px;
+      height: 64px;
+      border: 2px solid #ddd;
+      background-color: #eee;
+      border-radius: 50%;
+    }
+  }
+}
