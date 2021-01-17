@@ -1,1 +1,6 @@
-<p>joined-room-list works!</p>
+<ng-container *ngIf="joinedRooms$ | async as rooms">
+  <h2>自分が参加しているルーム一覧</h2>
+  <ng-container *ngFor="let room of rooms">
+    <p>{{ room | json }}</p>
+  </ng-container>
+</ng-container>
