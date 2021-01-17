@@ -23,7 +23,7 @@ export class CreatedRoomListComponent implements OnInit {
     this.getCreatedRooms();
   }
 
-  private getCreatedRooms() {
+  private getCreatedRooms(): void {
     this.createdRooms$ = this.roomService.getCreatedRooms(this.uid);
   }
 }

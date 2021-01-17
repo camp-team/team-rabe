@@ -14,22 +14,25 @@
     <app-sidenav-right></app-sidenav-right>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="card-layout">
-      <ng-container *ngIf="users$ | async as users">
-        <div *ngFor="let user of users" class="user-card">
-          <div class="user-card__items">
-            <img
-              [src]="
-                user.avatarURL ? user?.avatarURL : 'assets/images/fake.svg'
-              "
-              alt="アバター画像"
-            />
-            <span [class.active]="user.activeRoomId === roomId"></span>
-            <p class="user-card__name">{{ user.name }}</p>
+    <div class="container">
+      <h2>参加者一覧</h2>
+      <div class="card-layout">
+        <ng-container *ngIf="users$ | async as users">
+          <div *ngFor="let user of users" class="user-card">
+            <div class="user-card__items">
+              <img
+                [src]="
+                  user?.avatarURL ? user?.avatarURL : 'assets/images/fake.svg'
+                "
+                alt="アバター画像"
+              />
+              <span [class.active]="user?.activeRoomId === roomId"></span>
+              <p class="user-card__name">{{ user?.name }}</p>
+            </div>
+            <button matRipple class="user-card__profile">プロフィール</button>
           </div>
-          <button matRipple class="user-card__profile">プロフィール</button>
-        </div>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

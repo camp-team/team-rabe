@@ -1,9 +1,12 @@
+@import '~@angular/material/theming';
+
 .nav-btn {
   height: 100%;
   background: #171c1e;
   padding: 0 8px;
   position: absolute;
   right: 0;
+  z-index: 2;
 }
 
 .sidenav {
@@ -17,19 +20,43 @@ mat-icon {
 .card-layout {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  padding: 24px 0;
 }
 
 .user-card {
   padding: 24px;
+  border-radius: 24px;
+  background-color: #fff;
   display: grid;
+  place-items: center;
   grid-template-rows: auto 1fr;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 16px;
+  transition: ease-in-out 0.3s;
+  &:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
   &__items {
+    display: grid;
+    place-items: center;
     img {
       width: 64px;
       height: 64px;
       border: 2px solid #ddd;
       background-color: #eee;
       border-radius: 50%;
+      margin-bottom: 8px;
+    }
+  }
+  &__name {
+    margin-bottom: 16px;
+  }
+  &__profile {
+    padding: 4px 6px;
+    border-radius: 4px;
+    @include mat-elevation-transition;
+    &:hover {
+      @include mat-elevation(2);
     }
   }
 }
