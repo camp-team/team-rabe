@@ -48,10 +48,8 @@ export class AuthService {
         console.log(error);
         this.redirectService.redirectToTop();
       });
-    console.log(customToken);
 
     if (customToken) {
-      console.log(customToken);
       this.afAuth
         .signInWithCustomToken(customToken)
         .catch((error) => {
@@ -63,11 +61,15 @@ export class AuthService {
   }
 
   logout(): void {
-    this.afAuth.signOut();
-    this.router
-      .navigate(['/welcome'], {
-        queryParams: null,
-      })
-      .then(() => this.snackbar.open('ログアウトしました'));
+    this.afAuth.signOut().then(() => {
+      this.user$.subscribe((user) => {
+        if (user) {
+          this.router.navigate(['/welcome'], {
+            queryParams: null,
+          });
+        }
+      });
+      this.snackbar.open('ログアウトしました');
+    });
   }
 }

@@ -1,12 +1,20 @@
 <app-header>
   <button
     class="shared-btn"
-    mat-raised-button
-    *ngIf="roomPage"
+    mat-button
+    *ngIf="roomPage && isLargeScreen"
     (click)="openDialog()"
   >
     URL共有
   </button>
 </app-header>
-<router-outlet (activate)="onActivate($event)"></router-outlet>
+<button
+  matRipple
+  class="shared-btn--sp"
+  *ngIf="roomPage && !isLargeScreen"
+  (click)="openDialog()"
+>
+  <mat-icon>qr_code_2 </mat-icon>
+</button>
+<router-outlet #element (activate)="onActivate($event)"></router-outlet>
 <app-footer></app-footer>

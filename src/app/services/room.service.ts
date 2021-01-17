@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import * as firebase from 'firebase';
 import { combineLatest, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Room } from '../interfaces/room';
-import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,10 @@ export class RoomService {
     private db: AngularFirestore,
     private storage: AngularFireStorage
   ) {}
+
+  getJoinedRoomUsers(roomId: string): Observable<unknown> {
+    return this.db.collection(`rooms/${roomId}/joinedUserId`).valueChanges();
+  }
 
   async changeRoomIconURL(roomId: string, url: string): Promise<void> {
     const result = await this.storage
