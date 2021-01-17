@@ -9,7 +9,7 @@
         <span data-text="O">O</span>
       </a>
     </h1>
-    <a routerLink="/editor" class="header__create">チームをつくる</a>
+    <a routerLink="/create-room" class="header__create">ルームを作成</a>
   </div>
   <ng-content></ng-content>
   <ng-container *ngIf="authService.user$ | async as user; else blank">
@@ -39,6 +39,6 @@
     </mat-menu>
   </ng-container>
   <ng-template #blank>
-    <button mat-raised-button color="accent">ログイン</button>
+    <a class="login" routerLink="/welcome">ログイン</a>
   </ng-template>
 </mat-toolbar>
