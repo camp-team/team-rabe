@@ -1,7 +1,16 @@
-<mat-toolbar class="header" color="primary">
-  <h1>
-    <a class="header-logo" routerLink="/">ORUYO</a>
-  </h1>
+<mat-toolbar class="header">
+  <div class="header__items">
+    <h1>
+      <a class="header__logo" routerLink="/">
+        <span data-text="O">O</span>
+        <span data-text="R">R</span>
+        <span data-text="U">U</span>
+        <span data-text="Y">Y</span>
+        <span data-text="O">O</span>
+      </a>
+    </h1>
+    <a routerLink="/editor" class="header__create">チームをつくる</a>
+  </div>
   <ng-content></ng-content>
   <ng-container *ngIf="authService.user$ | async as user; else blank">
     <button
