@@ -88,7 +88,7 @@ export const joinRoomAndReplyMessage = functions
         functions.logger.info('退店');
         replyMessage(
           replyToken,
-          `ありがとうございました！${roomName}から退店しました。`
+          `ありがとうございました！${roomName}から退店しました。他のルームに入室するには、再度ルームのIDを送信してください🙇‍♂️`
         );
       } else if (
         event.type === 'message' &&
@@ -150,6 +150,35 @@ export const joinRoomAndReplyMessage = functions
               },
             });
           });
+      } else if (
+        event.type === 'message' &&
+        event.message.text === 'ルームから出る'
+      ) {
+        const logId = db.collection('_').doc().id;
+        await db
+          .collection('rooms')
+          .doc(activeRoomId)
+          .collection('entrylogs')
+          .doc(logId)
+          .set({
+            userId,
+            activeRoomId,
+            leavedAt: timestamp,
+            leavedRoomAt: timestamp,
+          });
+
+        await db.collection('users').doc(userId).update({
+          activeRoomId: '',
+        });
+
+        functions.logger.info(activeRoomId);
+        functions.logger.info(event.message);
+        functions.logger.info(userId);
+        functions.logger.info('退店');
+        replyMessage(
+          replyToken,
+          `ありがとうございました！${roomName}のルームから出ました。`
+        );
       }
     }
     if (
