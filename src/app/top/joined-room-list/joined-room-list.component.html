@@ -1,6 +1,32 @@
-<ng-container *ngIf="joinedRooms$ | async as rooms">
-  <h2>自分が参加しているルーム一覧</h2>
-  <ng-container *ngFor="let room of rooms">
-    <p>{{ room | json }}</p>
+<div class="created-room-list">
+  <div class="heading">
+    <h2 class="heading__text">自分が参加しているルーム一覧</h2>
+  </div>
+
+  <mat-divider class="divider"></mat-divider>
+
+  <ng-container *ngIf="joinedRooms$ | async as rooms; else joinRoom">
+    <ng-container *ngFor="let room of rooms">
+      <a routerLink="/room-detail/{{ room.roomId }}" class="room">
+        <div class="room__thumbnail">
+          <img [src]="room.iconURL" alt="" />
+        </div>
+        <div class="room__body">
+          <p class="room__name">{{ room.name }}</p>
+          <p class="room__description">{{ room.description }}</p>
+        </div>
+      </a>
+    </ng-container>
   </ng-container>
-</ng-container>
+  <ng-template #joinRoom>
+    <a routerLink="/create-room" class="room">
+      <div class="room__thumbnail">
+        <mat-icon class="room__icon">add</mat-icon>
+      </div>
+      <div class="room__body">
+        <p class="room__name">まだありません</p>
+        <p class="room__description">ルームに参加しましょう。</p>
+      </div>
+    </a>
+  </ng-template>
+</div>

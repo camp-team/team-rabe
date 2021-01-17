@@ -74,6 +74,7 @@ export class CreateRoomComponent implements OnInit {
           this.snackBar.open('ルームを作成しました！');
           this.redirectService.redirectToRoomDetail(id);
           this.userService.addUserCreatedRoomId(this.uid, id);
+          this.userService.addUserJoinedRoomId(this.uid, id);
         })
         .finally(() => (this.isProcessing = false));
     }
