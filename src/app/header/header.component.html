@@ -9,7 +9,7 @@
         <span data-text="O">O</span>
       </a>
     </h1>
-    <a routerLink="/create-room" class="header__create">チームをつくる</a>
+    <a routerLink="/create-room" class="header__create">ルームを作成</a>
   </div>
   <ng-content></ng-content>
   <ng-container *ngIf="authService.user$ | async as user; else blank">
