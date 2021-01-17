@@ -58,12 +58,30 @@ export class RoomService {
 
   getCreatedRooms(uid: string): Observable<Room[]> {
     return this.db
-      .collection(`users/${uid}/createdRoomIds`)
+      .collection(`users/${uid}/createdRoomIds`, (ref) => {
+        return ref.orderBy('createdAt', 'desc');
+      })
       .valueChanges()
       .pipe(
-        switchMap((roomIds: { roomId: string }[]) => {
-          const room$$: Observable<Room>[] = roomIds.map(
-            (doc: { roomId: string }) => this.getRoom(doc.roomId)
+        switchMap((roomIds: any[]) => {
+          const room$$: Observable<Room>[] = roomIds.map((doc: any) =>
+            this.getRoom(doc.roomId)
+          );
+          return combineLatest(room$$);
+        })
+      );
+  }
+
+  getJoinedRooms(uid: string): Observable<Room[]> {
+    return this.db
+      .collection(`users/${uid}/joinedRoomIds/`, (ref) => {
+        return ref.orderBy('joinedAt', 'desc');
+      })
+      .valueChanges()
+      .pipe(
+        switchMap((roomIds: any[]) => {
+          const room$$: Observable<Room>[] = roomIds.map((doc: any) =>
+            this.getRoom(doc.roomId)
           );
           return combineLatest(room$$);
         })
