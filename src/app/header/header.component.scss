@@ -2,7 +2,7 @@
 
 h1 {
   font-size: 16px;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .header {
@@ -14,8 +14,6 @@ h1 {
     font-size: 1em;
     font-weight: 700;
     margin-bottom: 48px;
-  }
-  &__logo {
     margin-right: 16px;
   }
   &__create {
@@ -79,21 +77,16 @@ h1 {
       display: block;
     }
   }
-  // @media (min-width: 30em) {
-  //   &__logo {
-  //     font-size: 3em;
-  //   }
-  // }
-  // @media (min-width: 40em) {
-  //   &__logo {
-  //     font-size: 5em;
-  //   }
-  // }
-  // @media (min-width: 60em) {
-  //   &__logo {
-  //     font-size: 8em;
-  //   }
-  // }
+}
+
+.login {
+  margin-right: 8px;
+  text-align: center;
+  transition: ease-out 0.3s;
+  cursor: pointer;
+  &:hover {
+    color: #00c300;
+  }
 }
 
 mat-toolbar-row {

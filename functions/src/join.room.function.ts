@@ -20,87 +20,285 @@ export const joinRoomAndReplyMessage = functions
     const timestamp = admin.firestore.Timestamp.now();
     const replyToken = event.replyToken;
     let userText = '';
-    if (event.type === 'message' && event.message.type === 'text') {
-      userText = event.message.text;
-    } else {
-      userText = '(Message type is not text)';
-    }
 
-    await db.collection('users').doc(userId).update({
-      userId,
-      activeRoomId: userText,
-      joinedAt: timestamp,
-    });
-
-    await db
+    const activeRoomId = await db
       .collection('users')
       .doc(userId)
       .get()
       .then(async (user: any) => {
-        if (user.exists) {
-          const name = user.data().name;
-
-          await db
-            .collection('rooms')
-            .doc(userText)
-            .get()
-            .then(async (room: any) => {
-              const iconlURL = room.data().iconURL;
-              const roomName = room.data().name;
-
-              await client.replyFlex(event.replyToken, 'this is a message', {
-                type: 'bubble',
-                hero: {
-                  type: 'image',
-                  url: `${iconlURL}`,
-                  size: 'full',
-                  aspectRatio: '20:13',
-                  aspectMode: 'cover',
-                  action: {
-                    type: 'uri',
-                    label: 'Line',
-                    uri: `http://localhost:4200/room-detail/${userText}`,
-                  },
-                },
-                body: {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'text',
-                      text: `${name}さん`,
-                      size: 'xl',
-                      weight: 'bold',
-                    },
-                    {
-                      type: 'box',
-                      layout: 'baseline',
-                      margin: 'md',
-                      contents: [
-                        {
-                          type: 'text',
-                          text: `${roomName}に入りました！`,
-                          flex: 0,
-                          margin: 'md',
-                          size: 'md',
-                          color: '#000000',
-                        },
-                      ],
-                    },
-                  ],
-                },
-              });
-            });
+        if (user.data().activeRoomId) {
+          return user.data().activeRoomId;
         } else {
-          replyMessage(replyToken, 'You are not the customer, Register?');
+          return null;
         }
-        return null;
-      })
-      .catch((err) => {
-        console.log(err);
       });
 
-    return res.status(200).send(req.method);
+    if (activeRoomId !== null) {
+      const roomName = await db
+        .collection('rooms')
+        .doc(activeRoomId)
+        .get()
+        .then(async (user: any) => {
+          if (user.exists) {
+            return user.data().name;
+          } else {
+            return null;
+          }
+        });
+
+      if (event.type === 'message' && event.message.text === '入店する') {
+        const logId = db.collection('_').doc().id;
+        await db
+          .collection('rooms')
+          .doc(activeRoomId)
+          .collection('entrylogs')
+          .doc(logId)
+          .set({
+            userId,
+            activeRoomId,
+            entryedAt: timestamp,
+          });
+
+        functions.logger.info(activeRoomId);
+        functions.logger.info(event.message);
+        functions.logger.info('入店');
+        replyMessage(
+          replyToken,
+          `いらっしゃいませ！${roomName}に入店しました🎉`
+        );
+      } else if (
+        event.type === 'message' &&
+        event.message.text === '退店する'
+      ) {
+        const logId = db.collection('_').doc().id;
+        await db
+          .collection('rooms')
+          .doc(activeRoomId)
+          .collection('entrylogs')
+          .doc(logId)
+          .set({
+            userId,
+            activeRoomId,
+            leavedAt: timestamp,
+          });
+
+        functions.logger.info(activeRoomId);
+        functions.logger.info(event.message);
+        functions.logger.info(userId);
+        functions.logger.info('退店');
+        replyMessage(
+          replyToken,
+          `ありがとうございました！${roomName}から退店しました。他のルームに入室するには、再度ルームのIDを送信してください🙇‍♂️`
+        );
+      } else if (
+        event.type === 'message' &&
+        event.message.text === 'お店の状況を確認する'
+      ) {
+        await db
+          .collection('rooms')
+          .doc(activeRoomId)
+          .get()
+          .then(async (room: any) => {
+            const iconURL = room.data().iconURL;
+            const activeRoomName = room.data().name;
+
+            functions.logger.info(activeRoomId);
+            functions.logger.info(event.message);
+            functions.logger.info(room);
+            functions.logger.info('入店');
+
+            await client.replyFlex(event.replyToken, 'this is a link', {
+              type: 'bubble',
+              hero: {
+                type: 'image',
+                url: `${iconURL}`,
+                size: 'full',
+                aspectRatio: '20:13',
+                aspectMode: 'cover',
+                action: {
+                  type: 'uri',
+                  label: 'Line',
+                  uri: `http://localhost:4200/room-detail/${activeRoomId}`,
+                },
+              },
+              body: {
+                type: 'box',
+                layout: 'vertical',
+                contents: [
+                  {
+                    type: 'text',
+                    text: `${activeRoomName}の状況確認ですね？`,
+                    size: 'xl',
+                    weight: 'bold',
+                  },
+                  {
+                    type: 'box',
+                    layout: 'baseline',
+                    margin: 'md',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: `上の画像をクリックすると今の状況を確認できます🔖`,
+                        flex: 0,
+                        margin: 'md',
+                        size: 'md',
+                        color: '#000000',
+                      },
+                    ],
+                  },
+                ],
+              },
+            });
+          });
+      } else if (
+        event.type === 'message' &&
+        event.message.text === 'ルームから出る'
+      ) {
+        const logId = db.collection('_').doc().id;
+        await db
+          .collection('rooms')
+          .doc(activeRoomId)
+          .collection('entrylogs')
+          .doc(logId)
+          .set({
+            userId,
+            activeRoomId,
+            leavedAt: timestamp,
+            leavedRoomAt: timestamp,
+          });
+
+        await db.collection('users').doc(userId).update({
+          activeRoomId: '',
+        });
+
+        functions.logger.info(activeRoomId);
+        functions.logger.info(event.message);
+        functions.logger.info(userId);
+        functions.logger.info('退店');
+        replyMessage(
+          replyToken,
+          `ありがとうございました！${roomName}のルームから出ました。`
+        );
+      }
+    }
+    if (
+      !activeRoomId &&
+      event.type === 'message' &&
+      event.message.type === 'text'
+    ) {
+      userText = event.message.text;
+      functions.logger.info(userText);
+      functions.logger.info(event.message);
+
+      await db
+        .collection('rooms')
+        .doc(userText)
+        .collection('joinedUserIds')
+        .doc(userId)
+        .set({
+          userId,
+          activeRoomId: userText,
+          joinedAt: timestamp,
+        });
+
+      await db.collection('users').doc(userId).update({
+        userId,
+        activeRoomId: userText,
+        joinedAt: timestamp,
+      });
+
+      await db
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then(async (user: any) => {
+          if (user.exists) {
+            const name = user.data().name;
+            await db
+              .collection('users')
+              .doc(userId)
+              .collection('joinedRoomIds')
+              .doc(userText)
+              .set({
+                joinedRoomId: userText,
+                joinedAt: timestamp,
+              });
+
+            await db
+              .collection('rooms')
+              .doc(userText)
+              .get()
+              .then(async (room: any) => {
+                const iconURL = room.data().iconURL;
+                const newRoomName = room.data().name;
+
+                functions.logger.info(activeRoomId);
+                functions.logger.info(event.message);
+                functions.logger.info(userId);
+                functions.logger.info('ジョイン');
+
+                await client.replyFlex(event.replyToken, 'this is a message', {
+                  type: 'bubble',
+                  hero: {
+                    type: 'image',
+                    url: `${iconURL}`,
+                    size: 'full',
+                    aspectRatio: '20:13',
+                    aspectMode: 'cover',
+                    action: {
+                      type: 'uri',
+                      label: 'Line',
+                      uri: `http://localhost:4200/room-detail/${userText}`,
+                    },
+                  },
+                  body: {
+                    type: 'box',
+                    layout: 'vertical',
+                    contents: [
+                      {
+                        type: 'text',
+                        text: `ようこそ、${name}さん`,
+                        size: 'xl',
+                        weight: 'bold',
+                      },
+                      {
+                        type: 'box',
+                        layout: 'baseline',
+                        margin: 'md',
+                        contents: [
+                          {
+                            type: 'text',
+                            text: `${newRoomName}のメンバーになりました！`,
+                            flex: 0,
+                            margin: 'md',
+                            size: 'md',
+                            color: '#000000',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                });
+              });
+          } else {
+            functions.logger.info(activeRoomId);
+            functions.logger.info(event.message);
+            functions.logger.info(userId);
+            functions.logger.info('エルス');
+            userText = '(Message type is not text)';
+            replyMessage(
+              replyToken,
+              `すみません、ちょっと何を言ってるのかわかりません😭`
+            );
+          }
+          return null;
+        })
+        .catch((err) => {
+          functions.logger.error(err);
+        });
+
+      return res.status(200).send(req.method);
+    }
   });
 
 const LINE_HEADER = {
