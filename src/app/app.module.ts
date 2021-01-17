@@ -18,7 +18,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
 import { UrlAndQrModule } from './url-and-qr/url-and-qr.module';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -47,7 +50,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     UrlAndQrModule,
     MatDialogModule,
   ],
-  providers: [{ provide: REGION, useValue: 'asia-northeast1' }],
+  providers: [
+    { provide: REGION, useValue: 'asia-northeast1' },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3000 } },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
