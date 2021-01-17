@@ -46,11 +46,7 @@ export const joinRoomAndReplyMessage = functions
           }
         });
 
-      if (
-        activeRoomId &&
-        event.type === 'message' &&
-        event.message.text === '入店する'
-      ) {
+      if (event.type === 'message' && event.message.text === '入店する') {
         const logId = db.collection('_').doc().id;
         await db
           .collection('rooms')
@@ -71,7 +67,6 @@ export const joinRoomAndReplyMessage = functions
           `いらっしゃいませ！${roomName}に入店しました🎉`
         );
       } else if (
-        activeRoomId &&
         event.type === 'message' &&
         event.message.text === '退店する'
       ) {
@@ -96,7 +91,6 @@ export const joinRoomAndReplyMessage = functions
           `ありがとうございました！${roomName}から退店しました。`
         );
       } else if (
-        activeRoomId &&
         event.type === 'message' &&
         event.message.text === 'お店の状況を確認する'
       ) {
@@ -159,7 +153,7 @@ export const joinRoomAndReplyMessage = functions
       }
     }
     if (
-      !activeRoomId.exists &&
+      !activeRoomId &&
       event.type === 'message' &&
       event.message.type === 'text'
     ) {
@@ -262,7 +256,11 @@ export const joinRoomAndReplyMessage = functions
             functions.logger.info(event.message);
             functions.logger.info(userId);
             functions.logger.info('エルス');
-            replyMessage(replyToken, 'You are not the customer, Register?');
+            userText = '(Message type is not text)';
+            replyMessage(
+              replyToken,
+              `すみません、ちょっと何を言ってるのかわかりません😭`
+            );
           }
           return null;
         })
@@ -271,12 +269,6 @@ export const joinRoomAndReplyMessage = functions
         });
 
       return res.status(200).send(req.method);
-    } else {
-      userText = '(Message type is not text)';
-      replyMessage(
-        replyToken,
-        `すみません、ちょっと何を言ってるのかわかりません😭`
-      );
     }
   });
 
