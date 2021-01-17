@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import * as firebase from 'firebase';
 import { combineLatest, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Room } from '../interfaces/room';
-import { UserData } from '../interfaces/user-data';
 
 @Injectable({
   providedIn: 'root',
@@ -34,12 +34,22 @@ export class RoomService {
     );
   }
 
+  async setIconURLToStorage(roomId: string, url: string): Promise<string> {
+    const result = await this.storage
+      .ref(`teams/${roomId}`)
+      .putString(url, firebase.default.storage.StringFormat.DATA_URL);
+    return result.ref.getDownloadURL();
+  }
+
   getRoom(id: string): Observable<Room> {
     return this.db.doc<Room>(`rooms/${id}`).valueChanges();
   }
 
-  async updateRoom(room: Omit<Room, 'createdAt' | 'ownerId'>): Promise<void> {
-    await this.changeRoomIconURL(room.roomId, room.iconURL);
+  async updateRoom(
+    room: Omit<Room, 'createdAt' | 'ownerId' | 'iconURL'>,
+    iconURL: string
+  ): Promise<void> {
+    await this.setIconURLToStorage(room.roomId, iconURL);
     this.db
       .doc<Omit<Room, 'iconURL' | 'createdAt' | 'ownerId'>>(
         `rooms/${room.roomId}`
@@ -50,13 +60,17 @@ export class RoomService {
       });
   }
 
-  async createRoom(room: Omit<Room, 'createdAt' | 'roomId'>): Promise<string> {
+  async createRoom(
+    room: Omit<Room, 'createdAt' | 'roomId' | 'iconURL'>,
+    iconURL: string
+  ): Promise<string> {
     const id = this.db.createId();
-    await this.changeRoomIconURL(id, room.iconURL);
-    this.db.doc<Room>(`rooms/${id}`).set({
+    const image = await this.setIconURLToStorage(id, iconURL);
+    await this.db.doc<Room>(`rooms/${id}`).set({
       ...room,
       createdAt: new Date(),
       roomId: id,
+      iconURL: image,
     });
     return id;
   }

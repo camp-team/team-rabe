@@ -35,4 +35,11 @@ export class UserService {
       createdAt: new Date(),
     });
   }
+
+  addUserJoinedRoomId(uid: string, roomId: string): Promise<void> {
+    return this.db.doc(`users/${uid}/joinedRoomIds/${roomId}`).set({
+      roomId,
+      joinedAt: new Date(),
+    });
+  }
 }

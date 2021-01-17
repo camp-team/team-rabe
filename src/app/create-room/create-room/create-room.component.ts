@@ -47,7 +47,6 @@ export class CreateRoomComponent implements OnInit {
       aspectRatio: 1 / 1,
       oldImageUrl: this.imageFile,
       width: 420,
-      resultType: 'base64',
     };
   }
 
@@ -60,20 +59,23 @@ export class CreateRoomComponent implements OnInit {
     const formData = this.form.value;
 
     if (this.imageFile !== undefined) {
-      const roomValue: Omit<Room, 'createdAt' | 'entrylogs' | 'roomId'> = {
+      const roomValue: Omit<
+        Room,
+        'createdAt' | 'entrylogs' | 'roomId' | 'iconURL'
+      > = {
         name: formData.name,
         description: formData.description,
-        iconURL: this.imageFile,
         updatedAt: new Date(),
         ownerId: this.authService.uid,
       };
 
       await this.roomService
-        .createRoom(roomValue)
+        .createRoom(roomValue, this.imageFile)
         .then((id) => {
           this.snackBar.open('ルームを作成しました！');
           this.redirectService.redirectToRoomDetail(id);
           this.userService.addUserCreatedRoomId(this.uid, id);
+          this.userService.addUserJoinedRoomId(this.uid, id);
         })
         .finally(() => (this.isProcessing = false));
     }
