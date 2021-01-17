@@ -69,4 +69,20 @@ export class RoomService {
         })
       );
   }
+
+  getJoinedRooms(uid: string): Observable<Room[]> {
+    return this.db
+      .collection(`users/${uid}/joinedRoomIds/`, (ref) => {
+        return ref.orderBy('joinedAt', 'desc');
+      })
+      .valueChanges()
+      .pipe(
+        switchMap((roomIds: any[]) => {
+          const room$$: Observable<Room>[] = roomIds.map((doc: any) =>
+            this.getRoom(doc.roomId)
+          );
+          return combineLatest(room$$);
+        })
+      );
+  }
 }
