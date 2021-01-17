@@ -1,15 +1,99 @@
-.header {
-  z-index: 1000;
-}
+@import '~@angular/material/theming';
 
 h1 {
-  margin-right: auto;
+  font-size: 16px;
+  margin-top: 4px;
 }
 
-.header-logo {
-  color: white;
-  display: block;
-  text-decoration: none;
+.header {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  z-index: 1000;
+  &__logo {
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+    margin-bottom: 48px;
+  }
+  &__logo {
+    margin-right: 16px;
+  }
+  &__create {
+    margin-right: 8px;
+    text-align: center;
+    transition: ease-out 0.3s;
+    cursor: pointer;
+    &:hover {
+      color: #00c300;
+    }
+  }
+  &__items {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: auto;
+  }
+  span {
+    display: inline-block;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 500px;
+    -webkit-font-smoothing: antialiased;
+  }
+  &__logo span::before,
+  &__logo span::after {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: -1px;
+    transform-origin: left top;
+    transition: all ease-out 0.3s;
+    content: attr(data-text);
+  }
+  &__logo span::before {
+    z-index: 1;
+    color: rgba(0, 0, 0, 0.2);
+    transform: scale(1.1, 1) skew(0deg, 20deg);
+  }
+  &__logo span::after {
+    z-index: 2;
+    color: #00c300;
+    text-shadow: -1px 0 1px #00c300, 1px 0 1px #fff;
+    transform: rotateY(-40deg);
+  }
+  &__logo span:hover::before {
+    transform: scale(1.1, 1) skew(0deg, 5deg);
+  }
+  &__logo span:hover::after {
+    transform: rotateY(-10deg);
+  }
+  &__logo span + span {
+    margin-left: 0.3em;
+  }
+  @media (min-width: 20em) {
+    &__logo {
+      font-size: 2em;
+    }
+    &__logo span::before,
+    &__logo span::after {
+      display: block;
+    }
+  }
+  // @media (min-width: 30em) {
+  //   &__logo {
+  //     font-size: 3em;
+  //   }
+  // }
+  // @media (min-width: 40em) {
+  //   &__logo {
+  //     font-size: 5em;
+  //   }
+  // }
+  // @media (min-width: 60em) {
+  //   &__logo {
+  //     font-size: 8em;
+  //   }
+  // }
 }
 
 mat-toolbar-row {
