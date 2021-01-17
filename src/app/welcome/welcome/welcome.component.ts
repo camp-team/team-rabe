@@ -36,8 +36,12 @@ export class WelcomeComponent implements OnInit {
       const code = param.get('code');
       if (code) {
         this.authService.loginWithLine(code).then(() => {
+          this.authService.user$.subscribe((user) => {
+            if (user) {
+              this.redirectService.redirectToTop();
+            }
+          });
           this.snackBar.open('ログインしました');
-          this.redirectService.redirectToTop();
         });
       }
     });
