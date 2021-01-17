@@ -24,6 +24,7 @@ import {
 } from '@angular/material/snack-bar';
 import { UrlAndQrModule } from './url-and-qr/url-and-qr.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSnackBarModule,
     UrlAndQrModule,
     MatDialogModule,
+    MatRippleModule,
   ],
   providers: [
     { provide: REGION, useValue: 'asia-northeast1' },

@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatRippleModule } from '@angular/material/core';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   declarations: [RoomDetailComponent, SidenavRightComponent],
@@ -21,6 +22,7 @@ import { MatRippleModule } from '@angular/material/core';
     MatListModule,
     MatTableModule,
     MatRippleModule,
+    SwiperModule,
   ],
 })
 export class RoomDetailModule {}

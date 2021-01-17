@@ -6,6 +6,14 @@ import { UserData } from 'src/app/interfaces/user-data';
 import { RoomService } from 'src/app/services/room.service';
 import { UiService } from 'src/app/services/ui.service';
 import { UserService } from 'src/app/services/user.service';
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Swiper,
+} from 'swiper/core';
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
   selector: 'app-room-detail',
@@ -19,6 +27,8 @@ export class RoomDetailComponent implements OnInit {
   roomId: string;
   users$: Observable<UserData[]>;
 
+  swiper: Swiper;
+
   constructor(
     private uiService: UiService,
     private roomService: RoomService,
@@ -27,6 +37,29 @@ export class RoomDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.swiper = new Swiper('.swiper-container', {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      // Responsive breakpoints
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        // when window width is >= 480px
+        480: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 4,
+          spaceBetween: 40,
+        },
+      },
+    });
+
     this.getScreenSize();
 
     this.route.paramMap.subscribe((room) => {
@@ -49,5 +82,13 @@ export class RoomDetailComponent implements OnInit {
 
   getScreenSize(): void {
     this.scrWidth = window.innerWidth;
+  }
+
+  onSwiper(swiper): void {
+    console.log(swiper);
+  }
+
+  onSlideChange(): void {
+    console.log('slide change');
   }
 }

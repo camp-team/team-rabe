@@ -1,38 +1,34 @@
-<button class="nav-btn" (click)="toggleNav()">
-  <mat-icon>navigate_next</mat-icon>
-</button>
-
-<mat-sidenav-container (backdropClick)="toggleNav()">
-  <mat-sidenav
-    #sidenav
-    [opened]="opened$ | async"
-    fixedInViewport
-    [fixedTopGap]="scrWidth > 600 ? 64 : 56"
-    class="sidenav"
-    position="end"
-  >
-    <app-sidenav-right></app-sidenav-right>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="container">
-      <h2>参加者一覧</h2>
-      <div class="card-layout">
-        <ng-container *ngIf="users$ | async as users">
-          <div *ngFor="let user of users" class="user-card">
-            <div class="user-card__items">
-              <img
-                [src]="
-                  user?.avatarURL ? user?.avatarURL : 'assets/images/fake.svg'
-                "
-                alt="アバター画像"
-              />
-              <span [class.active]="user?.activeRoomId === roomId"></span>
-              <p class="user-card__name">{{ user?.name }}</p>
+<div class="container">
+  <h2>参加者一覧</h2>
+  <ng-container *ngIf="users$ | async as users">
+    <swiper
+      class="swiper"
+      [freeMode]="true"
+      [loop]="true"
+      [roundLengths]="true"
+      [width]="240"
+      [height]="120"
+      [autoplay]="true"
+    >
+      <ng-container *ngFor="let user of users">
+        <div class="card-layout">
+          <ng-template swiperSlide>
+            <div class="user-card">
+              <div class="user-card__items">
+                <img
+                  [src]="
+                    user?.avatarURL ? user?.avatarURL : 'assets/images/fake.svg'
+                  "
+                  alt="アバター画像"
+                />
+                <span [class.active]="user?.activeRoomId === roomId"></span>
+                <p class="user-card__name">{{ user?.name }}</p>
+              </div>
+              <button matRipple class="user-card__profile">プロフィール</button>
             </div>
-            <button matRipple class="user-card__profile">プロフィール</button>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+          </ng-template>
+        </div>
+      </ng-container>
+    </swiper>
+  </ng-container>
+</div>

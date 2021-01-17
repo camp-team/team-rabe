@@ -1,5 +1,9 @@
 @import '~@angular/material/theming';
 
+h2 {
+  margin: 16px;
+}
+
 .nav-btn {
   height: 100%;
   background: #171c1e;
@@ -15,6 +19,10 @@
 
 mat-icon {
   color: #fff;
+}
+
+.swiper {
+  padding: 32px 0;
 }
 
 .card-layout {
