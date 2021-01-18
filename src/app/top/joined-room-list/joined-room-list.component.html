@@ -7,13 +7,13 @@
 
   <ng-container *ngIf="joinedRooms$ | async as rooms; else joinRoom">
     <ng-container *ngFor="let room of rooms">
-      <a routerLink="/room-detail/{{ room.roomId }}" class="room">
+      <a routerLink="/room-detail/{{ room?.roomId }}" class="room">
         <div class="room__thumbnail">
-          <img [src]="room.iconURL" alt="" />
+          <img [src]="room?.iconURL" alt="" />
         </div>
         <div class="room__body">
-          <p class="room__name">{{ room.name }}</p>
-          <p class="room__description">{{ room.description }}</p>
+          <p class="room__name">{{ room?.name }}</p>
+          <p class="room__description">{{ room?.description }}</p>
         </div>
       </a>
     </ng-container>
