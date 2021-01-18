@@ -33,9 +33,9 @@ export const getLineCodeWebhook = functions
     }
 
     if (code) {
-      res.redirect(`https://team-rabe.web.app/welcome?code=${code}`);
+      res.redirect(`http://localhost:4200/welcome?code=${code}`);
     } else {
-      res.redirect(`http://team-rabe.web.app`);
+      res.redirect(`http://localhost:4200`);
     }
   });
 
